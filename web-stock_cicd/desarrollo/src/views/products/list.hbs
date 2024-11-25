@@ -1,0 +1,44 @@
+<div class="container p-4">
+    <h2 class="text-center">Listado de Productos</h2>
+    <div class="row">
+        <div class="col-md-12">
+            {{#if products.length}}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Stock</th>
+                            <th>Precio</th>
+                            <th>Costo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each products}}
+                            <tr>
+                                <td>{{product}}</td>
+                                <td>{{type}}</td>
+                                <td>{{description}}</td>
+                                <td>{{stock}}</td>
+                                <td>${{price}}</td>
+                                <td>${{cost}}</td>
+                                <td>
+                                    <a href="/products/edit/{{id}}" class="btn btn-secondary btn-sm">Editar</a>
+                                    <a href="/products/delete/{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <div class="alert alert-warning text-center" role="alert">
+                    No hay productos guardados aún. 
+                    <a href="/products/add" class="btn btn-primary btn-sm">Crear uno nuevo</a>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</div>
+
