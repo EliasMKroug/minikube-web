@@ -10,7 +10,8 @@ const { getPriority } = require('os');
 const passport = require('passport')
 
 //routes
-//const productsRouter = require('./routes/products.js')
+const productsRouter = require('./routes/products.js')
+//const oAuth = require('./routes/authentication')
 
 //Initializations
 const app = express();
@@ -54,7 +55,7 @@ app.use((req, res, next) => {
 //Routes
 app.use(require('./routes'))
 app.use(require('./routes/authentication'))
-app.use('/products',require('./routes/products.js'))
+app.use('/products',productsRouter)
 
 
 //Public
