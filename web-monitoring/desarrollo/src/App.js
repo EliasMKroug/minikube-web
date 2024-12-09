@@ -1,71 +1,166 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  const [selectedUrl, setSelectedUrl] = useState("http://grafana.minikube.com/login"); // URL inicial
+  const [selectedUrl, setSelectedUrl] = useState("http://grafana.minikube.com/login");
+
+  useEffect(() => {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    [...tooltipTriggerList].forEach(
+      (tooltipTriggerEl) => new window.bootstrap.Tooltip(tooltipTriggerEl)
+    );
+  }, []);
 
   return (
     <div className="app">
-      {/* <h1>Bruno Monitoring</h1> */}
-      <div className="d-flex flex-column align-items-center text-black text-center py-1">
-        <div className="d-flex align-items-center justify-content-center">
+      <div className="d-flex" style={{ height: '99vh' }}>
+        {/* Navbar vertical */}
+        <div className="d-flex flex-column flex-shrink-0 bg-body-tertiary" style={{ width: '4.5rem' }}>
           {/* Logo */}
-          <img
-            src="/apple-touch-icon.png" // Ruta de tu logo
-            alt="Bruno Monitoring Logo"
-            width="50"
-            height="50"
-            className="me-1"
-          />
-          <h1 className="display-7 fw-bold">Bruno Monitoring</h1> {/* Texto grande y negrita */}
-        </div>
-        <p className="lead fs-5 mt-0">La mejor solución para monitorear tus sistemas en tiempo real.</p>
-      </div>
-
-      {/* Navbar de Bootstrap */}
-      <nav className="navbar navbar-default navbar-expand-lg navbar-secondary bg-light">
-        <div className="container-fluid">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+          <a
+            href="/"
+            className="d-block p-3 link-body-emphasis text-decoration-none"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Inicio"
           >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <button
-                  /* className="nav-link btn btn-link btn-secondary" */
-                  className="btn btn-outline-secondary"
-                  onClick={() => setSelectedUrl("http://grafana.minikube.com/login")}
-                >
-                  Grafana
-                </button>
+            <img
+              src="/apple-touch-icon.png"
+              alt="Bruno Monitoring Logo"
+              width="40"
+              height="40"
+              className="rounded-circle"
+            />
+          </a>
+
+          {/* Opciones del menú */}
+          <ul className="nav nav-pills nav-flush flex-column mb-auto text-center">
+            <li className="nav-item">
+              <a
+                href="#"
+                className="nav-link active py-3 border-bottom rounded-0"
+                aria-current="page"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+                title="Grafana"
+                onClick={() => setSelectedUrl("http://grafana.minikube.com/login")}
+              >
+                <img
+                  src="/icons/grafana.svg"
+                  alt="Grafana Icon"
+                  width="24"
+                  height="24"
+                />
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="nav-link py-3 border-bottom rounded-0"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+                title="Prometheus"
+                onClick={() => setSelectedUrl("http://prometheus.minikube.com:9090/query")}
+              >
+                <img
+                  src="/icons/prometheus.svg"
+                  alt="Prometheus Icon"
+                  width="24"
+                  height="24"
+                />
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="nav-link py-3 border-bottom rounded-0"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+                title="Tekton"
+                onClick={() => window.open("http://tekton.minikube.com:9097/#/about", "_blank")}
+              >
+                <img
+                  src="/icons/tekton.svg"
+                  alt="Tekton Icon"
+                  width="24"
+                  height="24"
+                />
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="nav-link py-3 border-bottom rounded-0"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+                title="Argo-cd"
+                onClick={() => window.open("https://argocd.minikube.com/login?return_url=https%3A%2F%2Fargocd.minikube.com%2Fapplications", "_blank")}
+              >
+                <img
+                  src="/icons/argocd.svg"
+                  alt="Argo Icon"
+                  width="24"
+                  height="24"
+                />
+              </a>
+            </li>            
+          </ul>
+
+          {/* Dropdown para configuraciones */}
+          <div className="dropdown border-top">
+            <a
+              href="#"
+              className="d-flex align-items-center justify-content-center p-3 link-body-emphasis text-decoration-none dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="/apple-touch-icon.png"
+                alt="Configuraciones"
+                width="24"
+                height="24"
+                className="rounded-circle"
+              />
+            </a>
+            <ul className="dropdown-menu text-small shadow">
+              <li>
+                <a className="dropdown-item" href="#">
+                  New project...
+                </a>
               </li>
-              <li className="nav-item">
-                <button
-                  className="btn btn-outline-secondary"
-                  onClick={() => setSelectedUrl("http://prometheus.minikube.com:9090/query")}
-                >
-                  Prometheus
-                </button>
+              <li>
+                <a className="dropdown-item" href="#">
+                  Settings
+                </a>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#">
+                  Profile
+                </a>
+              </li>
+              <li>
+                <hr className="dropdown-divider" />
+              </li>
+              <li>
+                <a className="dropdown-item" href="#">
+                  Sign out
+                </a>
               </li>
             </ul>
           </div>
         </div>
-      </nav>
 
-      {/* Iframe para mostrar el contenido */}
-      <iframe
-        src={selectedUrl}
-        frameBorder="0"
-        title="Monitoring Dashboard"
-      ></iframe>
+        {/* Panel de contenido a la derecha */}
+        <div className="flex-grow-1">
+          <iframe
+            src={selectedUrl}
+            frameBorder="0"
+            title="Monitoring Dashboard"
+            style={{ width: '100%', height: '100%' }}
+          ></iframe>
+        </div>
+      </div>
     </div>
   );
 }
