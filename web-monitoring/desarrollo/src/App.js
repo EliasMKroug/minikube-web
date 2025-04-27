@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+
 function App() {
   const [selectedUrl, setSelectedUrl] = useState("http://grafana.minikube.com/login");
 
@@ -61,7 +62,7 @@ function App() {
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"
                 title="Prometheus"
-                onClick={() => setSelectedUrl("http://prometheus.minikube.com:9090/query")}
+                onClick={() => setSelectedUrl("http://prometheus.minikube.com:9090")}
               >
                 <img
                   src="/icons/prometheus.svg"

@@ -1,18 +1,12 @@
-para iniciar el programa debe ejecutar el siguiente comando: 
+CONTRUCCION DE IMAGENES CON DOCKER
 
-- npm run dev
-
-
-
-DESPLIEGUE DE DOCKER
-
-# Construir la imagen de la aplicación Node.js
+# 1 Construir la imagen de la aplicación Node.js
 docker build -t web-stack-nodejs .
 
-# Construir la environment de minikube
+# 2 Construir la environment de minikube
 eval $(minikube docker-env)
 
-# Construir la imagen de MySQL (si tienes un Dockerfile)
+# 3 Construir la imagen de MySQL (si tienes un Dockerfile)
 docker build -t web-stack-mysql .
 
 
