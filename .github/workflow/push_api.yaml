@@ -1,10 +1,5 @@
-name: Deploy Bot Telegram to DockerHub
-
-on:
-  push:
-    branches: #comentario
-      - main  # 👈 ejecuta cuando haces push a main
-
+on: push
+name: deploy
 jobs:
   deploy:
     name: deploy to cluster # este es el posta
