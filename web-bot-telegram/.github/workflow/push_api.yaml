@@ -6,7 +6,8 @@ on:
       - main  # 👈 ejecuta cuando haces push a main
 
 jobs:
-  build-and-push:
+  deploy:
+    name: deploy to cluster
     runs-on: ubuntu-latest
 
     steps:
