@@ -1,0 +1,37 @@
+on: push
+name: deploy
+
+jobs:
+  deploy:
+    name: deploy to cluster
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Login en Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Construir y pushear imagen de Node.js
+        uses: docker/build-push-action@v5
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          context: ./web-stock_cicd/desarrollo
+          file: ./web-stock_cicd/desarrollo/Dockerfile
+          push: true
+          tags: eliaskroug/node-app:latest
+
+      - name: Construir y pushear imagen de MySQL
+        uses: docker/build-push-action@v5
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          context: ./web-stock_cicd/desarrollo/database
+          file: ./web-stock_cicd/desarrollo/database/Dockerfile
+          push: true
+          tags: eliaskroug/mysql-db:latest

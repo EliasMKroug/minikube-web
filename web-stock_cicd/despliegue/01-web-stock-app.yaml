@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: web-stock
+  namespace: argocd
+spec:
+  source:
+    path: web-stock_cicd/despliegue
+    repoURL: https://github.com/EliasMKroug/minikube-web.git
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: web-stack
+  project: application
