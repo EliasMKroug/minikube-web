@@ -31,7 +31,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          context: ./web-stock_cicd/desarrollodatabase
+          context: ./web-stock_cicd/desarrollo/database
           file: ./web-stock_cicd/desarrollo/database/Dockerfile
           push: true
           tags: eliaskroug/mysql-db:latest
