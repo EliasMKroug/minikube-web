@@ -23,4 +23,4 @@ jobs:
           context: ./web-bot-telegram
           file: ./web-bot-telegram/Dockerfile
           push: true
-          tags: eliaskroug/telegram-bot:latest
+          tags: eliaskroug/telegram-bot:0.1
