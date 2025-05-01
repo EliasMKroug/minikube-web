@@ -16,7 +16,7 @@ spec:
       containers:
       - name: nodejs
         image: eliaskroug/node-app:latest  # Tu imagen de Node.js
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         env:
         - name: DB_HOST
           value: "mysql-service"  # Nombre del servicio MySQL
