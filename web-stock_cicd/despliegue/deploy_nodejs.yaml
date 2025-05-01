@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nodejs
-        image: web-stack-nodejs:latest  # Tu imagen de Node.js
+        image: eliaskroug/node-app:latest  # Tu imagen de Node.js
         imagePullPolicy: Never
         env:
         - name: DB_HOST
