@@ -24,7 +24,7 @@ jobs:
           context: ./web-stock_cicd/desarrollo
           file: ./web-stock_cicd/desarrollo/Dockerfile
           push: true
-          tags: eliaskroug/node-app:v1.0
+          tags: eliaskroug/node-app:1.1
 
       - name: Construir y pushear imagen de MySQL
         uses: docker/build-push-action@v5
