@@ -1,0 +1,104 @@
+<div class="container p-4">
+    <h2 class="text-center mb-4">Mis Transacciones</h2>
+
+    <!-- Botones de acción -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/accounts/add" class="btn btn-success">
+            <i class="fas fa-plus"></i> Nueva Transacción
+        </a>
+        <a href="/accounts/dashboard" class="btn btn-primary ms-2">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a href="/accounts/card" class="btn btn-secondary ms-2">
+            <i class="fas fa-credit-card"></i> CreditCard
+        </a>
+    </div>
+
+    <!-- Formulario de filtros -->
+    <form method="GET" action="/accounts" class="mb-4 bg-light p-3 rounded shadow-sm">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label for="typeFilter" class="form-label">Tipo</label>
+                <select id="typeFilter" name="type" class="form-select">
+                    <option value="">Todos</option>
+                    <option value="ingreso">Ingreso</option>
+                    <option value="gasto">Gasto</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="categoryFilter" class="form-label">Categoría</label>
+                <input type="text" id="categoryFilter" name="category" class="form-control" placeholder="Categoría">
+            </div>
+            <div class="col-md-3">
+                <label for="paymentPlatformFilter" class="form-label">Método de Pago</label>
+                <input type="text" id="paymentPlatformFilter" name="payment_platform" class="form-control" placeholder="Método de Pago">
+            </div>
+            <div class="col-md-3">
+                <label for="dateFilter" class="form-label">Mes y Año</label>
+                <input type="month" id="dateFilter" name="fecha" class="form-control">
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-filter"></i> Filtrar
+            </button>
+        </div>
+    </form>
+
+    {{#if accounts.length}}
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered shadow-sm">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th>Tipo</th>
+                        <th>Categoría</th>
+                        <th>Monto</th>
+                        <th>Método de Pago</th>
+                        <th>Cuotas</th>
+                        <th>Descripción</th>
+                        <th>
+                            Fecha
+                            <a href="?order=asc" class="text-light ms-1">
+                                <i class="fas fa-sort-amount-up"></i>
+                            </a>
+                            <a href="?order=desc" class="text-light ms-1">
+                                <i class="fas fa-sort-amount-down"></i>
+                            </a>
+                        </th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each accounts}}
+                        <tr class="text-center">
+                            <td>
+                                <span class="badge {{#if (eq type 'ingreso')}}bg-success{{else}}bg-danger{{/if}}">
+                                    {{type}}
+                                </span>
+                            </td>
+                            <td>{{category}}</td>
+                            <td class="fw-bold text-primary">${{amount}}</td>
+                            <td>{{payment_platform}}</td>
+                            <td>{{installments}}</td>
+                            <td>{{description}}</td>
+                            <td>{{formatDate fecha}}</td>
+                            <td>
+                                <a href="/accounts/edit/{{id}}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="/accounts/delete/{{id}}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center fw-bold shadow-sm">
+            Total del gasto: ${{totalGasto}}
+        </div>
+    {{else}}
+        <div class="alert alert-warning text-center">No hay transacciones registradas.</div>
+    {{/if}}
+</div>

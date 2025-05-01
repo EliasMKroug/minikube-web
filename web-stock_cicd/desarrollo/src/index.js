@@ -11,7 +11,8 @@ const passport = require('passport')
 
 //routes
 const productsRouter = require('./routes/products.js')
-//const oAuth = require('./routes/authentication')
+const accountsRouter = require('./routes/accounts.routes.js')
+const turnsRouter = require('./routes/turns.routes.js')
 
 //Initializations
 const app = express();
@@ -31,7 +32,7 @@ app.set('view engine', '.hbs');
 
 //Middlewares
 app.use(session({
-    secret: 'steelcodessessions',
+    secret: 'finanzasessions',
     resalve: false,
     saveUninitialized: false,
     store: new MySQLStore(database)
@@ -56,10 +57,12 @@ app.use((req, res, next) => {
 app.use(require('./routes'))
 app.use(require('./routes/authentication'))
 app.use('/products',productsRouter)
+app.use('/accounts',accountsRouter)
+app.use('/turns',turnsRouter)
 
 
 //Public
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Starting the server
 app.listen(app.get('port'), () => {

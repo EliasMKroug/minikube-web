@@ -1,5 +1,10 @@
 <div class="container p-4">
     <h2 class="text-center">Listado de Productos</h2>
+    <!-- Botón para agregar productos -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/products/add" class="btn btn-success">+ Agregar Producto</a>
+    </div>
+    <!-- Tabla de productos -->    
     <div class="row">
         <div class="col-md-12">
             {{#if products.length}}
@@ -30,6 +35,13 @@
                                 </td>
                             </tr>
                         {{/each}}
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>Total</strong></td>
+                            <td><strong>{{totalStock}}</strong></td>
+                            <td><strong>${{totalPrice}}</strong></td>
+                            <td><strong>${{totalCost}}</strong></td>
+                            <td></td>
+                        </tr>                        
                     </tbody>
                 </table>
             {{else}}

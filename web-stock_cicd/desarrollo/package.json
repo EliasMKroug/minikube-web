@@ -4,8 +4,9 @@
   "description": "para iniciar el programa debe ejecutar el siguiente comando:",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src",
-    "start": "node src/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,8 @@
     "express-session": "^1.17.3",
     "express-validator": "^6.14.2",
     "hbs": "^4.2.0",
+    "method-override": "^3.0.0",
+    "moment": "^2.30.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "passport": "^0.6.0",
@@ -26,7 +29,6 @@
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {
-    "node-sass": "^9.0.0",
     "nodemon": "^2.0.20"
   }
 }

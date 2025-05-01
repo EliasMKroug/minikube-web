@@ -7,8 +7,24 @@ const { isLoggedIn } = require('../lib/auth')
 
 /* ENDPOINT PARA REFRESCAR USUARIO ACTUAL */
 router.get('/', isLoggedIn, async (req, res) => {
-    const products = await pool.query('SELECT * FROM products WHERE user_id = ?', [req.user.id]);
-    res.render('products/list', { products }); // Asegúrate de tener la vista correspondiente.
+    try {
+        const products = await pool.query('SELECT * FROM products WHERE user_id = ?', [req.user.id]);
+
+        // Calcular los totales
+        const totalStock = products.reduce((sum, product) => sum + product.stock, 0);
+        const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
+        const totalCost = products.reduce((sum, product) => sum + product.cost, 0);
+
+        res.render('products/list', {
+            products,
+            totalStock,
+            totalPrice,
+            totalCost
+        });
+    } catch (err) {
+        console.error('Error al obtener productos:', err);
+        res.status(500).send('Server Error');
+    }
 });
 
 /* ENDOPOINT PARA PODER RENDERIZAR LA LISTA DE PRODUCTOS*/
@@ -50,42 +66,53 @@ router.get('/delete/:id', isLoggedIn, async (req, res) => {
         req.flash('success', 'Producto borrado con éxito');
     } catch (error) {
         console.error('Error al borrar producto:', error);
-        req.flash('error', 'No se pudo borrar el producto.');
+        req.flash('message', 'No se pudo borrar el producto.');
     }
     res.redirect('/products');
 });
 
+/* RUTA PARA CARGAR EL FORMULARIO DE EDICIÓN */
+router.get('/edit/:id', isLoggedIn, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const products = await pool.query('SELECT * FROM products WHERE id = ?', [id]);
 
+        if (products.length === 0) {
+            req.flash('error', 'Producto no encontrado');
+            return res.redirect('/products');
+        }
+
+        res.render('products/edit', { products: products[0] }); // Enviar el producto encontrado
+    } catch (error) {
+        console.error('Error al obtener producto:', error);
+        req.flash('message', 'Hubo un problema al cargar la edición del producto.');
+        res.redirect('/products');
+    }
+});
+
+/* ENDPOINT PARA ACTUALIZAR PRODUCTO */
+router.post('/edit/:id', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    const { product, type, description, stock, price, cost } = req.body;
+
+    const updatedProduct = {
+        product,
+        type,
+        description,
+        stock,
+        price,
+        cost,
+    };
+
+    try {
+        await pool.query('UPDATE products SET ? WHERE id = ?', [updatedProduct, id]);
+        req.flash('success', 'Producto actualizado con éxito');
+        res.redirect('/products');
+    } catch (error) {
+        console.error('Error al actualizar producto:', error);
+        req.flash('message', 'No se pudo actualizar el producto.');
+        res.redirect(`/products/edit/${id}`);
+    }
+});
 
 module.exports = router
-
-
-/* ENDPOUINT PARA MOSTRAR LINKS POR USUARIO*/
-/* router.get('/', isLoggedIn, async (req, res) => {
-    const links = await pool.query('SELECT * FROM links WHERE user_id = ?', [req.user.id])
-    console.log(links)
-    res.render('links/list', { links })
-}) */
-
-
-
-/* RUTA DE EDICION DE LINKS */
-/* router.get('/edit/:id', isLoggedIn,async (req, res) => {
-    const { id } = req.params
-    const links = await pool.query('SELECT * FROM links WHERE id = ?', [id])
-    res.render('links/edit', {link: links[0]} )
-}) */
-
-/* RUTA PARA EDITAR LINKS */
-/* router.post('/edit/:id', isLoggedIn, async (req, res) => {
-    const { id } = req.params
-    const { title, url, description } = req.body
-    const newLink = {
-        title,
-        url,
-        description
-    }
-    await pool.query('UPDATE links set ? WHERE id = ?', [newLink, id])
-    req.flash('success', 'Link actualizado con exito')
-    res.redirect('/links')
-}) */

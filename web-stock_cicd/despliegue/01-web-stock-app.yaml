@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: web-stock
+  name: web-stack
   namespace: argocd  # Donde vive la app de Argo CD
 spec:
   project: default
