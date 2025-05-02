@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: react-app
-          image: eliaskroug/app-monitoring:1.1
+          image: eliaskroug/app-monitoring:1.2
           ports:
             - containerPort: 80
 ---

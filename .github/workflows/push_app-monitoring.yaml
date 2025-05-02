@@ -24,5 +24,5 @@ jobs:
           context: ./web-monitoring/desarrollo
           file: ./web-monitoring/desarrollo/Dockerfile
           push: true
-          tags: eliaskroug/app-monitoring:1.1
+          tags: eliaskroug/app-monitoring:1.2
 
