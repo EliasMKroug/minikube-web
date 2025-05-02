@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: react-app
-          image: my-react-app:latest
+          image: eliaskroug/app-monitoring:1.0
           ports:
             - containerPort: 80
 ---
@@ -30,4 +30,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-  loadBalancerIP: 192.168.49.115
+  loadBalancerIP: 192.168.49.116

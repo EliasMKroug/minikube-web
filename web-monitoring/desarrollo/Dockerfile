@@ -2,7 +2,7 @@
 FROM node:18-alpine AS builder
 
 # Establece el directorio de trabajo
-WORKDIR /usr/src/app.js
+WORKDIR /usr/src/index.js
 
 # Copia los archivos package.json y package-lock.json
 COPY . .
