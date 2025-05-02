@@ -1,22 +1,21 @@
-# Usa una imagen base de Node.js
-FROM node:18
+# Etapa 1: build de la app
+FROM node:18-alpine as build
 
-# Establece el directorio de trabajo
-WORKDIR /usr/src/index
-
-# Copia los archivos package.json y package-lock.json
-COPY . .
-
-# Instala las dependencias
+WORKDIR /app
+COPY package*.json ./
 RUN npm install
-
-# Copia el resto de los archivos de la aplicación
 COPY . .
-# Instala las dependencias de producción
 RUN npm run build
 
-# Expone el puerto en el que corre tu app
-EXPOSE 3000
+# Etapa 2: imagen final con NGINX
+FROM nginx:stable-alpine
 
-# Comando para iniciar la aplicación
-CMD ["npm", "start"]
+# Copia el build a la carpeta pública de NGINX
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Opcional: configuración personalizada de NGINX (si querés manejar rutas con React Router)
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
