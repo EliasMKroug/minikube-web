@@ -34,4 +34,4 @@ jobs:
           context: ./web-stock_cicd/desarrollo/database
           file: ./web-stock_cicd/desarrollo/database/Dockerfile
           push: true
-          tags: eliaskroug/mysql-db:1.1
+          tags: eliaskroug/mysql-db:1.2
