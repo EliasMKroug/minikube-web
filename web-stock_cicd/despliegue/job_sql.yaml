@@ -16,8 +16,9 @@ spec:
             until mysqladmin ping -h mysql-service --silent; do
               sleep 2;
             done;
-            echo "Cargando dump...";
-            mysql -h mysql-service -u root < /sql/db_products.sql
+            echo "Reinicializando base de datos...";
+            mysql -h mysql-service -u root -e "DROP DATABASE IF EXISTS db_products; CREATE DATABASE db_products;"
+            mysql -h mysql-service -u root db_products < /sql/db_products.sql
         volumeMounts:
         - name: dump-volume
           mountPath: /sql
