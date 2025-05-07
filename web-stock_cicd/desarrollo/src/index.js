@@ -13,6 +13,7 @@ const passport = require('passport')
 const productsRouter = require('./routes/products.js')
 const accountsRouter = require('./routes/accounts.routes.js')
 const turnsRouter = require('./routes/turns.routes.js')
+const turnsApiRouter = require('./routes/api/turns.api.routes.js')
 
 //Initializations
 const app = express();
@@ -60,6 +61,8 @@ app.use('/products',productsRouter)
 app.use('/accounts',accountsRouter)
 app.use('/turns',turnsRouter)
 
+//Routes API
+app.use('/api/turns', turnsApiRouter)
 
 //Public
 app.use(express.static(path.join(__dirname, 'public')));
