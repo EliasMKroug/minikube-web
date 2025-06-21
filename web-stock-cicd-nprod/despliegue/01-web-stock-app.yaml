@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: web-stack
+  namespace: argocd  # Donde vive la app de Argo CD
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/EliasMKroug/minikube-web.git
+    targetRevision: HEAD
+    path: web-stock_cicd/despliegue
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: web-stack  # Donde se desplegarán los recursos (ya creado)
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Validate=true
+      - ApplyOutOfSyncOnly=true

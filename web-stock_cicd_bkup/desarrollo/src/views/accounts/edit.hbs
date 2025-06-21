@@ -1,0 +1,87 @@
+<div class="container p-4"> 
+    <h2 class="text-center">Editar Movimiento</h2>
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-body ">
+                    <form action="/accounts/edit/{{accounts.id}}" method="POST">
+                        <!-- Tipo de Movimiento -->
+                        <div class="form-group">
+                            <label for="type">Tipo de Movimiento:</label>
+                            <select name="type" id="type" class="form-control" required>
+                                <option value="ingreso" {{#ifCond accounts.type '==' 'ingreso'}}selected{{/ifCond}}>Ingreso</option>
+                                <option value="gasto" {{#ifCond accounts.type '==' 'gasto'}}selected{{/ifCond}}>Gasto</option>
+                            </select>
+                        </div>
+
+                        <!-- Categoría -->
+                        <div class="form-group">
+                            <label for="category">Categoría:</label>
+                            <input type="text" name="category" id="category" class="form-control" required value="{{accounts.category}}">
+                        </div>
+
+                        <!-- Monto -->
+                        <div class="form-group">
+                            <label for="amount">Monto ($):</label>
+                            <input type="number" name="amount" id="amount" class="form-control" required step="0.01" value="{{accounts.amount}}">
+                        </div>
+
+                        <!-- Método de Pago -->
+                        <div class="form-group">
+                            <label for="payment_platform">Método de Pago:</label>
+                            <select name="payment_platform" id="payment_platform" class="form-control" required>
+                                <option value="efectivo" {{#ifCond accounts.payment_platform '==' 'efectivo'}}selected{{/ifCond}}>Efectivo</option>
+                                <option value="visa" {{#ifCond accounts.payment_platform '==' 'visa'}}selected{{/ifCond}}>Visa</option>
+                                <option value="master" {{#ifCond accounts.payment_platform '==' 'master'}}selected{{/ifCond}}>MasterCard</option>
+                                <option value="mercadopago" {{#ifCond accounts.payment_platform '==' 'mercadopago'}}selected{{/ifCond}}>MercadoPago</option>
+                            </select>
+                        </div>
+
+                        <!-- Cuotas (Solo para Tarjetas) -->
+                        <div class="form-group" id="installments-group" style="display: none;">
+                            <label for="installments">Número de Cuotas:</label>
+                            <input type="number" name="installments" id="installments" class="form-control" value="{{accounts.installments}}" min="1">
+                        </div>
+                        
+                        <!-- Fecha -->
+                        <div class="form-group">
+                            <label for="date">Fecha:</label>
+                            <input type="date" name="fecha" id="fecha" class="form-control" required value="{{accounts.fecha}}">
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="form-group">
+                            <label for="description">Descripción (Opcional):</label>
+                            <textarea name="description" id="description" class="form-control" rows="3">{{accounts.description}}</textarea>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="form-group p-2 d-grid gap-1">
+                            <button class="btn btn-success btn-block">
+                                Save
+                            </button>
+                            <a href="/accounts" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const paymentPlatformSelect = document.getElementById('payment_platform');
+        const installmentsGroup = document.getElementById('installments-group');
+
+        paymentPlatformSelect.addEventListener('change', function () {
+            if (this.value === 'visa' || this.value === 'master') {
+                installmentsGroup.style.display = 'block';
+            } else {
+                installmentsGroup.style.display = 'none';
+            }
+        });
+        // Trigger change event to set initial state
+        paymentPlatformSelect.dispatchEvent(new Event('change'));
+    });
+</script>

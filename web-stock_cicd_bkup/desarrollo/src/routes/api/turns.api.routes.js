@@ -37,9 +37,9 @@ router.post("/add", async (req, res) => {
             [employee, fechaHora]
         );
         //console.log(existingTurn.length)
-    if (existingTurn.length > 0) {
-        return res.status(400).json({ message: `No es posible realizar la reserva, el horario de ${employee} está ocupado` });
-    }
+        if (existingTurn.length > 0) {
+            req.json({ message: `No es posible realizar la reserva, el horario de ${employee} está ocupado` });
+        }
 
         // Insertar en la base de datos
         const result = await pool.query(

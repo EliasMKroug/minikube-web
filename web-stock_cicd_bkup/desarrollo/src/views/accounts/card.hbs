@@ -1,0 +1,49 @@
+<div class="container p-4">
+    <h1 class="text-center">Tarjetas de Crédito</h1>
+    
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <label for="startDate">Fecha de Inicio</label>
+            <input type="date" id="startDate" class="form-control" value="{{startDate}}">
+        </div>
+        <div class="col-md-6">
+            <label for="endDate">Fecha de Fin</label>
+            <input type="date" id="endDate" class="form-control" value="{{endDate}}">
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <button id="filterVisaButton" class="btn btn-primary">Filtrar Visa</button>
+        </div>
+        <div class="col-md-6">
+            <button id="filterMasterButton" class="btn btn-primary">Filtrar MasterCard</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Resultados</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Monto</th>
+                        <th>Descripción</th>
+                        <th>Categoría</th>
+                    </tr>
+                </thead>
+                <tbody id="results">
+                    <!-- Los resultados se insertarán aquí -->
+                </tbody>
+            </table>
+            <h4>Total: $<span id="totalAmount">0.00</span></h4>
+        </div>
+    </div>
+</div>
+
+<!-- Datos de cuentas en un elemento script para ser utilizados por el archivo JavaScript -->
+<script id="accounts-data" type="application/json">{{{accounts}}}</script>
+
+<!-- Incluir el archivo JavaScript -->
+<script src="/js/card.js"></script>

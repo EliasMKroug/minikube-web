@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mysql-load-dump
+  namespace: web-stack
+spec:
+  template:
+    spec:
+      containers:
+      - name: mysql-client
+        image: mysql:5.7
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            echo "Esperando a MySQL...";
+            until mysqladmin ping -h mysql-service --silent; do
+              sleep 2;
+            done;
+            echo "Reinicializando base de datos...";
+            mysql -h mysql-service -u root -e "DROP DATABASE IF EXISTS db_products; CREATE DATABASE db_products;"
+            mysql -h mysql-service -u root db_products < /sql/db_products.sql
+        volumeMounts:
+        - name: dump-volume
+          mountPath: /sql
+      restartPolicy: OnFailure
+      volumes:
+      - name: dump-volume
+        configMap:
+          name: mysql-init-dump
