@@ -18,6 +18,8 @@ spec:
         image: eliaskroug/node-app:1.3  # Tu imagen de Node.js
         imagePullPolicy: IfNotPresent
         env:
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
         - name: DB_HOST
           value: "mysql-service"  # Nombre del servicio MySQL
         - name: DB_USER

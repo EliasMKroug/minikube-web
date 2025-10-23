@@ -159,4 +159,42 @@
         }
     });
 
+    // =============================
+    // API REST: agregar transacción desde JSON (para n8n u otras integraciones)
+    // =============================
+    router.post('/api/accounts', async (req, res) => {
+        try {
+        // Opcional: validación con API key para seguridad
+        const apiKey = req.headers['x-api-key'];
+        if (process.env.API_KEY_N8N && apiKey !== process.env.API_KEY_N8N) {
+            return res.status(403).json({ error: 'API key inválida' });
+        }
+    
+        const { type, category, amount, payment_platform, installments, fecha, description, user_id } = req.body;
+    
+        if (!type || !category || !amount || !fecha) {
+            return res.status(400).json({ error: 'Faltan campos obligatorios (type, category, amount, fecha)' });
+        }
+    
+        const newTransaction = {
+            type,
+            category,
+            amount,
+            payment_platform: payment_platform || null,
+            installments: installments || 1,
+            remaining_installments: installments || 1,
+            fecha,
+            description: description || '',
+            user_id: user_id || 1 // Podés usar req.user.id si querés ligarlo a sesión
+        };
+    
+        await pool.query('INSERT INTO accounts SET ?', [newTransaction]);
+        return res.status(201).json({ message: 'Transacción agregada correctamente', data: newTransaction });
+    
+        } catch (error) {
+        console.error('Error en /api/accounts:', error);
+        return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    });
+
     module.exports = router;
