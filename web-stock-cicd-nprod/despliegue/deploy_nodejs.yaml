@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nodejs
-        image: eliaskroug/node-app:1.2  # Tu imagen de Node.js
+        image: eliaskroug/node-app:1.4  # Tu imagen de Node.js
         imagePullPolicy: IfNotPresent
         env:
         - name: DB_HOST
